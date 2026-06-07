@@ -6,8 +6,11 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Install explicit OS engine runtime requirements for lightweight processing modules
-RUN apt-get update && apt-get install -y --no-install-recommends gcc && rm -rf /var/lib/apt/lists/*
+# Hardened step: Install build dependencies required to compile native SDK extensions
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy python structural matrices and trigger isolated layer install caching rules
 COPY requirements.txt .
